@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rocky AI – Intelligent AI Chat Agent. Sign in or create an account to get started.">
+    <title>Rocky AI — Welcome</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+    <!-- Google Identity Services (only if Client ID is configured) -->
+    {% if google_client_id %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    {% endif %}
+</head>
+<body>
+
+    <!-- Ambient background blobs -->
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+
+    <main class="container" role="main">
+
+        <!-- ── Left: About Panel ────────────────────────────────── -->
+        <section class="about-section" aria-label="About Rocky AI">
+            <div class="logo-wrap">
+                <div class="logo-icon" aria-hidden="true">🤖</div>
+                <span class="logo-text">Rocky AI</span>
+            </div>
+
+            <h1 class="about-title">Intelligent AI Chat Agent</h1>
+            <p class="about-desc">
+                Rocky AI is a state-of-the-art conversational assistant powered by large language models.
+                Sign in to resume your session or create a free account to get started.
+            </p>
+
+            <ul class="features-list" aria-label="Key Features">
+                <li class="feature-item">
+                    <span class="feature-icon" aria-hidden="true">🧠</span>
+                    <div class="feature-text">
+                        <h4>Modular Agent Logic</h4>
+                        <p>Routes complex requests through intent parsers, tools, and LLM calls.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon" aria-hidden="true">💾</span>
+                    <div class="feature-text">
+                        <h4>Persistent Cloud Memory</h4>
+                        <p>Your conversation context is saved and restored across sessions.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon" aria-hidden="true">🔐</span>
+                    <div class="feature-text">
+                        <h4>Secure JWT Sessions</h4>
+                        <p>HttpOnly cookies and industry-standard token verification.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon" aria-hidden="true">🌐</span>
+                    <div class="feature-text">
+                        <h4>Google Sign-In Ready</h4>
+                        <p>One-tap authentication using Google Identity Services.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ── Right: Auth Panel ─────────────────────────────────── -->
+        <section class="auth-section" aria-label="Authentication">
+
+            <!-- Status / Error message -->
+            <div id="statusBox" class="status-box" role="alert" aria-live="polite"></div>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs" role="tablist">
+                <button id="tab-login"  class="tab-btn active" role="tab" aria-selected="true"  onclick="switchTab('login')">Sign In</button>
+                <button id="tab-signup" class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLocalLogin(event)" novalidate aria-labelledby="tab-login">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input id="loginEmail" class="input-control" type="email"    placeholder="you@example.com" autocomplete="email"    required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input id="loginPassword" class="input-control" type="password" placeholder="••••••••"         autocomplete="current-password" required>
+                </div>
+                <button id="loginSubmit" class="submit-btn" type="submit">Login</button>
+            </form>
+
+            <!-- Sign-Up Form -->
+            <form id="signupForm" class="auth-form" onsubmit="handleLocalSignup(event)" novalidate aria-labelledby="tab-signup">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input id="signupName"     class="input-control" type="text"     placeholder="John Doe"         autocomplete="name"         required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input id="signupEmail"    class="input-control" type="email"    placeholder="you@example.com" autocomplete="email"         required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input id="signupPassword" class="input-control" type="password" placeholder="Min 8 characters" autocomplete="new-password"  required>
+                </div>
+                <button id="signupSubmit" class="submit-btn" type="submit">Create Account</button>
+            </form>
+
+            <!-- OAuth Separator -->
+            <div class="separator" aria-hidden="true">or continue with</div>
+
+            <!-- Google Sign-In -->
+            <div class="google-auth-container">
+                {% if google_client_id %}
+                    <div id="g_id_onload"
+                         data-client_id="{{ google_client_id }}"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleCredentialResponse"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="pill"
+                         data-theme="filled_black"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
+                {% else %}
+                    <div class="google-warning">
+                        ⚠️ <strong>Google Sign-In not configured.</strong><br>
+                        Set <code>GOOGLE_CLIENT_ID</code> in your <code>.env</code> file to enable.
+                    </div>
+                {% endif %}
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Page Script -->
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

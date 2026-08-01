@@ -1,0 +1,308 @@
+/* =============================================================
+   Rocky AI — Login Page Styles
+   File:    static/css/login.css
+   ============================================================= */
+
+/* ── CSS Custom Properties ──────────────────────────────────── */
+:root {
+    --bg-base:        #0a0c10;
+    --bg-surface:     rgba(20, 24, 33, 0.72);
+    --bg-input:       #151821;
+    --border:         rgba(255, 255, 255, 0.08);
+    --text-primary:   #f3f4f6;
+    --text-secondary: #9ca3af;
+    --accent:         #10a37f;
+    --accent-hover:   #0e8c6d;
+    --danger:         #ef4444;
+    --shadow:         0 20px 40px rgba(0, 0, 0, 0.4);
+    --transition:     all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ───────────────────────────────────────────────────── */
+body {
+    font-family: 'Sora', system-ui, sans-serif;
+    background: radial-gradient(circle at 30% 30%, #111827 0%, var(--bg-base) 70%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ── Ambient Blobs ──────────────────────────────────────────── */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+    opacity: 0.15;
+    animation: float 8s infinite alternate;
+}
+.blob-1 { top: 10%; left: 10%; width: 300px; height: 300px; background: var(--accent); }
+.blob-2 { bottom: 10%; right: 10%; width: 350px; height: 350px; background: #2563eb; animation-duration: 10s; animation-direction: alternate-reverse; }
+
+@keyframes float {
+    from { transform: translateY(0)   scale(1);   }
+    to   { transform: translateY(20px) scale(1.1); }
+}
+
+/* ── Page Entry Animation ───────────────────────────────────── */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Container ──────────────────────────────────────────────── */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    box-shadow: var(--shadow);
+    z-index: 10;
+    overflow: hidden;
+    animation: fadeSlideUp 0.6s ease-out both;
+}
+
+/* ── About Panel (Left) ─────────────────────────────────────── */
+.about-section {
+    flex: 1.1;
+    padding: 52px 48px;
+    background: linear-gradient(135deg, rgba(16,163,127,0.08) 0%, rgba(37,99,235,0.03) 100%);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.logo-icon {
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent), #2563eb);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(16,163,127,0.25);
+    flex-shrink: 0;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.4px;
+    background: linear-gradient(to right, #fff, var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.28;
+    margin-bottom: 16px;
+    background: linear-gradient(to right, #ffffff, #10a37f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-desc {
+    color: var(--text-secondary);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin-bottom: 36px;
+}
+
+/* ── Feature List ───────────────────────────────────────────── */
+.features-list  { display: flex; flex-direction: column; gap: 20px; }
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.feature-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 1px;
+}
+
+.feature-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+
+.feature-text p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ── Auth Panel (Right) ─────────────────────────────────────── */
+.auth-section {
+    flex: 0.9;
+    padding: 52px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ── Tabs ───────────────────────────────────────────────────── */
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 12px;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.tab-btn.active { color: var(--text-primary); }
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+}
+
+/* ── Forms ──────────────────────────────────────────────────── */
+.auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-form.active {
+    display: flex;
+    animation: fadeSlideUp 0.28s ease both;
+}
+
+.form-group           { display: flex; flex-direction: column; gap: 7px; }
+.form-group label     { font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+
+.input-control {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-family: inherit;
+    color: var(--text-primary);
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.input-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(16,163,127,0.12);
+}
+
+/* ── Status / Error Box ─────────────────────────────────────── */
+.status-box {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.22);
+    color: var(--danger);
+    padding: 11px 14px;
+    border-radius: 9px;
+    font-size: 13px;
+    display: none;
+    line-height: 1.45;
+    animation: fadeSlideUp 0.2s ease both;
+}
+
+/* ── Submit Button ──────────────────────────────────────────── */
+.submit-btn {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 4px;
+    letter-spacing: 0.2px;
+}
+
+.submit-btn:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); }
+.submit-btn:active:not(:disabled) { transform: translateY(0); }
+.submit-btn:disabled  { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* ── Separator ──────────────────────────────────────────────── */
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.separator::before,
+.separator::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+
+/* ── Google Button Container ────────────────────────────────── */
+.google-auth-container { display: flex; justify-content: center; }
+
+.google-warning {
+    color: #f59e0b;
+    background: rgba(245,158,11,0.07);
+    border: 1px solid rgba(245,158,11,0.2);
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    width: 100%;
+}
+
+.google-warning code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11.5px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 780px) {
+    .container { flex-direction: column; max-width: 480px; }
+    .about-section { padding: 40px 32px; border-right: none; border-bottom: 1px solid var(--border); }
+    .auth-section  { padding: 40px 32px; }
+}

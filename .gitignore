@@ -1,0 +1,41 @@
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# ── Virtual Environments ────────────────────────────────────────
+venv/
+env/
+.venv/
+.env.local
+
+# ── Environment Secrets (NEVER commit) ─────────────────────────
+.env
+
+# ── Local Databases ─────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Flask / App Artifacts ───────────────────────────────────────
+instance/
+.webassets-cache
+
+# ── Distribution / Packaging ────────────────────────────────────
+dist/
+build/
+*.egg-info/
+
+# ── IDE / Editor Artifacts ──────────────────────────────────────
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ── OS Junk ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

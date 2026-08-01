@@ -19,7 +19,7 @@ It demonstrates how to build and deploy a real **AI agent architecture** using a
 
 ## 🧠 AI Model Information
 
-- **Model Name:** `meta-llama/Meta-Llama-3-8B-Instruct`
+- **Model Name:** `meta-llama/Llama-3.1-8B-Instruct`
 - **Model Provider:** :Meta
 - **API Platform:** :Hugging Face Router API
 
