@@ -24,10 +24,19 @@
 
 <!-- ── Header ────────────────────────────────────────────────── -->
 <header class="header" role="banner">
-    <div class="logo">
-        <div class="logo-icon" aria-hidden="true">🤖</div>
-        <span class="logo-text">Rocky AI</span>
-        <span class="logo-badge">Beta</span>
+    <div class="header-left">
+        <button id="sidebarToggle" class="icon-btn" title="Toggle Sidebar" aria-label="Toggle Sidebar" onclick="toggleSidebar()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <div class="logo">
+            <div class="logo-icon" aria-hidden="true">🤖</div>
+            <span class="logo-text">Rocky AI</span>
+            <span class="logo-badge">Beta</span>
+        </div>
     </div>
 
     <div class="header-right">
@@ -45,36 +54,63 @@
     </div>
 </header>
 
-<!-- ── Chat Area ─────────────────────────────────────────────── -->
-<div class="chat-wrapper">
-    <main id="chatbox" class="chat-container" role="log" aria-label="Chat messages" aria-live="polite">
-        <div class="welcome" id="welcome">
-            <div class="welcome-icon" aria-hidden="true">🤖</div>
-            <h2>Hey, I'm Rocky</h2>
-            <p>Ask me anything — I'm here to help you think, create, and explore.</p>
+<!-- ── App Main Layout ────────────────────────────────────────── -->
+<div class="app-body">
+
+    <!-- ── ChatGPT Style Sidebar Drawer ───────────────────────── -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-new-chat" onclick="createNewChat()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                New Chat
+            </button>
         </div>
+
+        <div class="section-label">Recent Chats</div>
+        <div id="sessionList" class="sidebar-content">
+            <!-- Dynamic session items will be injected here -->
+        </div>
+    </aside>
+
+    <!-- ── Main Chat Area ─────────────────────────────────────── -->
+    <main class="chat-wrapper">
+        <div id="chatbox" class="chat-container" role="log" aria-label="Chat messages" aria-live="polite">
+            <div class="welcome" id="welcome">
+                <div class="welcome-icon" aria-hidden="true">🤖</div>
+                <h2>Hey, I'm Rocky</h2>
+                <p>Ask me anything — I'm here to help you think, create, and explore.</p>
+            </div>
+        </div>
+
+        <!-- ── Input Area ─────────────────────────────────────── -->
+        <footer class="input-area" role="contentinfo">
+            <div class="input-box">
+                <textarea id="userInput" placeholder="Message Rocky…" rows="1" aria-label="Message input" autocomplete="off"></textarea>
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send message" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</p>
+        </footer>
     </main>
+
 </div>
 
-<!-- ── Input Area ─────────────────────────────────────────────── -->
-<footer class="input-area" role="contentinfo">
-    <div class="input-box">
-        <textarea
-            id="userInput"
-            placeholder="Message Rocky…"
-            rows="1"
-            aria-label="Message input"
-            autocomplete="off">
-        </textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send message" aria-label="Send message">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="22" y1="2" x2="11" y2="13"/>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
-        </button>
-    </div>
-    <p class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</p>
-</footer>
+<!-- Configure marked.js before chat.js loads -->
+<script>
+    marked.setOptions({
+        breaks: true,       /* treat single \n as <br> */
+        gfm: true,          /* GitHub Flavoured Markdown */
+        headerIds: false,   /* no auto-ids on headings  */
+        mangle: false
+    });
+</script>
 
 <!-- Page Script -->
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>

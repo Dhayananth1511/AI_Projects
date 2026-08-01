@@ -17,6 +17,7 @@ class DatabaseManager:
                 self.db = self.mongo_client['rocky_ai_db']
                 self.users_col = self.db['users']
                 self.chats_col = self.db['chats']
+                self.sessions_col = self.db['chat_sessions']
                 self.is_mongo = True
                 print("[DB] Successfully connected to Cloud Database (MongoDB Atlas).")
             except Exception as e:
@@ -46,11 +47,23 @@ class DatabaseManager:
             )
         """)
         
-        # Create chats table
+        # Create legacy chats table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS chats (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 email TEXT UNIQUE NOT NULL,
+                messages TEXT NOT NULL
+            )
+        """)
+        
+        # Create chat_sessions table (ChatGPT-style multi-conversation support)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS chat_sessions (
+                session_id TEXT PRIMARY KEY,
+                email TEXT NOT NULL,
+                title TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
                 messages TEXT NOT NULL
             )
         """)
